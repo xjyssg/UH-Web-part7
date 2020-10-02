@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import countryService from './services/countries'
+
 
 const useField = (type) => {
-  const [value, setValue] = useState('')
+  const [value, setData] = useState('')
 
   const onChange = (event) => {
-    setValue(event.target.value)
+    setData(event.target.value)
   }
 
   return {
@@ -16,15 +17,33 @@ const useField = (type) => {
 }
 
 const useCountry = (name) => {
-  const [country, setCountry] = useState(null)
+  const [data, setData] = useState(null)
+  const [found, setFound] = useState(false)
 
-  useEffect()
+  useEffect(() => {
+    console.log("start effect")
+    countryService
+      .getOne(name)
+      .then(response => {
+        console.log('!!!!!!!', response)
+        if (response) {
+          setData(response[0])
+          setFound(true)
+        } else {
+          setData(null)
+          setFound(false)
+        }
+      })
+  }, [name])
 
-  return country
+  return {
+    data,
+    found
+  }
 }
 
 const Country = ({ country }) => {
-  if (!country) {
+  if (country === null) {
     return null
   }
 
