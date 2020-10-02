@@ -90,9 +90,6 @@ const CreateNew = (props) => {
   const content = useField('text')
   const author = useField('text')
   const info = useField('text')
-  // const [content, setContent] = useState('')
-  // const [author, setAuthor] = useState('')
-  // const [info, setInfo] = useState('')
   const history = useHistory()
 
   const handleSubmit = (e) => {
@@ -104,6 +101,14 @@ const CreateNew = (props) => {
       votes: 0
     })
     history.push('/')
+  }
+
+  const handleReset = (e) => {
+    e.preventDefault()
+    console.log("$$##")
+    content.reset()
+    author.reset()
+    info.reset()
   }
 
   return (
@@ -123,6 +128,7 @@ const CreateNew = (props) => {
           <input {...info} />
         </div>
         <button>create</button>
+        <button onClick={handleReset}>reset</button>
       </form>
     </div>
   )
